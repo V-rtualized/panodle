@@ -15,7 +15,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "format": "npx prettier src --write"
+    "format": "npx prettier src --write",
+    "verify": "node src/scripts/verify.mjs"
   },
   "eslintConfig": {
     "extends": [
