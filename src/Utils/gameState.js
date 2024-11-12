@@ -61,6 +61,7 @@ export const saveGameState = (
     },
     {
       path: '/',
+      sameSite: true,
       maxAge: 60 * 60 * 24 * 7,
     }
   )
@@ -77,6 +78,7 @@ export const saveAttempts = (setCookie, cookies, newAttempts) => {
     },
     {
       path: '/',
+      sameSite: true,
       maxAge: 60 * 60 * 24 * 7,
     }
   )

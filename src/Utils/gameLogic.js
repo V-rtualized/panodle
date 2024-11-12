@@ -42,3 +42,34 @@ export const compareFeatures = (guessFeatures, targetFeatures) => {
   }
   return 'incorrect'
 }
+
+export const getComparison = (guessedRun, targetRun) => {
+  return {
+    Name: guessedRun.Name,
+    Lift: guessedRun.Lift === targetRun.Lift ? 'correct' : 'incorrect',
+    Zone: guessedRun.Zone === targetRun.Zone ? 'correct' : 'incorrect',
+    Difficulty: getHigherOrLowerDifficulty(
+      guessedRun.Difficulty,
+      targetRun.Difficulty
+    ),
+    Features: compareFeatures(guessedRun.Features, targetRun.Features),
+    Length:
+      guessedRun.Length === targetRun.Length
+        ? 'correct'
+        : guessedRun.Length < targetRun.Length
+          ? 'higher'
+          : 'lower',
+    StartingElevation:
+      guessedRun.StartingElevation === targetRun.StartingElevation
+        ? 'correct'
+        : guessedRun.StartingElevation < targetRun.StartingElevation
+          ? 'higher'
+          : 'lower',
+    EndingElevation:
+      guessedRun.EndingElevation === targetRun.EndingElevation
+        ? 'correct'
+        : guessedRun.EndingElevation < targetRun.EndingElevation
+          ? 'higher'
+          : 'lower',
+  }
+}
