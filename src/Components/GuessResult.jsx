@@ -3,7 +3,7 @@ import ComparisonIcon from './ComparisonIcon'
 
 const GuessResult = ({ guessResult }) => {
   return (
-    <div className="border rounded-lg p-4 bg-stone-50 dark:bg-stone-900">
+    <div className="border dark:border-stone-600 rounded-lg p-4 bg-slate-50 dark:bg-slate-900">
       <div className="font-bold mb-2">{guessResult.run.Name}</div>
       <div className="grid grid-cols-2 gap-2">
         {Object.entries(guessResult.comparison)
