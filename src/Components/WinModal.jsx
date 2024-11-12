@@ -1,4 +1,4 @@
-import { XIcon } from 'lucide-react'
+import { XIcon, Clipboard, Send } from 'lucide-react'
 import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 const WinModal = ({ isOpen, onClose, attempts }) => {
   const [chartData, setChartData] = useState([])
   const [cookies] = useCookies(['panodle_attempts'])
+  const [copied, setCopied] = useState(false)
 
   const getLast7DaysData = () => {
     const data = []
@@ -40,7 +41,19 @@ const WinModal = ({ isOpen, onClose, attempts }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, cookies.panodle_attempts, attempts])
 
-  if (!isOpen) return null
+  const handleShare = async () => {
+    const shareText = `I beat today's Panodle in ${attempts} attempts! Can you beat it faster?\nhttps://panodle.virtualized.dev`;
+    
+    try {
+      await navigator.clipboard.writeText(shareText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 4000); // Reset after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -98,6 +111,22 @@ const WinModal = ({ isOpen, onClose, attempts }) => {
               minPointSize={2}
             />
           </BarChart>
+        </div>
+          
+        <div className="mb-4 text-center space-y-4">
+          <button
+            onClick={handleShare}
+            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              copied 
+                ? 'bg-green-500 hover:bg-green-600' 
+                : 'bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano'
+            } text-white`}
+          >
+            <div className="flex text-center gap-2">
+              {copied ? <Clipboard size={20} className="mt-0.5" /> : <Send size={20} className="mt-0.5" />}
+              {copied ? 'Copied to Clipboard!' : 'Share'}
+            </div>
+          </button>
         </div>
       </div>
     </div>

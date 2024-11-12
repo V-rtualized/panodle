@@ -20,8 +20,8 @@ const DifficultyIcon = ({ difficulty, stroke }) => {
           stroke={stroke || 'white'}
           height={20}
           style={{
-            paddingTop: 5,
-            paddingRight: 3,
+            marginTop: 5,
+            marginRight: 3,
           }}
         />
       )
@@ -33,8 +33,8 @@ const DifficultyIcon = ({ difficulty, stroke }) => {
           stroke={stroke || 'white'}
           height={20}
           style={{
-            paddingTop: 5,
-            paddingRight: 3,
+            marginTop: 5,
+            marginRight: 3,
           }}
         />
       )
@@ -46,8 +46,8 @@ const DifficultyIcon = ({ difficulty, stroke }) => {
           stroke={stroke || 'white'}
           height={20}
           style={{
-            paddingTop: 5,
-            paddingRight: 3,
+            marginTop: 5,
+            marginRight: 3,
           }}
         />
       )
@@ -59,8 +59,8 @@ const DifficultyIcon = ({ difficulty, stroke }) => {
           stroke={stroke || 'white'}
           height={20}
           style={{
-            paddingTop: 5,
-            paddingRight: 3,
+            marginTop: 5,
+            marginRight: 3,
           }}
         />
       )
