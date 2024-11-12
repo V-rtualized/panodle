@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react'
 import { loadRunData } from '../Utils/dataLoader'
-import { decompressGameData } from '../Utils/gameState'
 import { getComparison } from '../Utils/gameLogic'
-import { saveGameState, saveAttempts } from '../Utils/gameState'
 import dailyData from '../daily.json'
+import {
+  GAME_STATE_PREFIX,
+  GUESS_PREFIX,
+  clearOldGameState,
+  loadGameState,
+  loadGuesses,
+  saveGameState,
+  saveGuess,
+  saveAttempts,
+} from '../Utils/gameState'
 
 export const useGameState = (
   cookies,
   setCookie,
+  removeCookie,
   MAX_GUESSES,
   setShowWinModal,
   setShowLossModal
@@ -15,7 +24,7 @@ export const useGameState = (
   const [runs, setRuns] = useState([])
   const [targetRun, setTargetRun] = useState(null)
   const [guesses, setGuesses] = useState([])
-  const [gameWon, setGameWon] = useState(false)
+  const [gameEnded, setGameEnded] = useState(false)
   const [attempts, setAttempts] = useState(0)
 
   const handleGuess = (guess, setGuess) => {
@@ -34,17 +43,20 @@ export const useGameState = (
     setGuesses(newGuesses)
     setGuess('')
 
+    // Save the new guess
+    saveGuess(setCookie, guessResult, newGuesses.length - 1)
+
     if (guessedRun.Name === targetRun.Name) {
-      setGameWon(true)
+      setGameEnded(true)
       setShowWinModal(true)
-      saveGameState(setCookie, targetRun, newGuesses, true)
+      saveGameState(setCookie, true, false)
       saveAttempts(setCookie, cookies, newAttempts)
     } else if (newAttempts >= MAX_GUESSES) {
-      setGameWon(true)
+      setGameEnded(true)
       setShowLossModal(true)
-      saveGameState(setCookie, targetRun, newGuesses, false, true)
+      saveGameState(setCookie, false, true)
     } else {
-      saveGameState(setCookie, targetRun, newGuesses, false)
+      saveGameState(setCookie, false, false)
     }
   }
 
@@ -54,7 +66,7 @@ export const useGameState = (
       setRuns(rows)
 
       const today = new Date().toISOString().split('T')[0]
-      const savedState = cookies.panodle_state
+      clearOldGameState(cookies, removeCookie)
 
       if (dailyData[today]) {
         setTargetRun(rows.find((run) => run.Name === dailyData[today]))
@@ -65,18 +77,24 @@ export const useGameState = (
         }
       }
 
+      const savedState = loadGameState(cookies, today)
       if (savedState && savedState.d === today) {
-        const decompressedGuesses = decompressGameData(savedState.g)
-        setGuesses(decompressedGuesses)
-        setGameWon(savedState.w || savedState.l)
-        setAttempts(savedState.g.length)
+        const loadedGuesses = loadGuesses(cookies, today)
+        setGuesses(loadedGuesses)
+        setGameEnded(savedState.w || savedState.l)
+        setAttempts(loadedGuesses.length)
         if (savedState.w) {
           setShowWinModal((prev) => (prev === null ? true : prev))
         } else if (savedState.l) {
           setShowLossModal((prev) => (prev === null ? true : prev))
         }
       } else {
-        setCookie('panodle_state', '', { path: '/', sameSite: true, expires: new Date(0) })
+        Object.keys(cookies)
+          .filter(
+            (key) =>
+              key.startsWith(GAME_STATE_PREFIX) || key.startsWith(GUESS_PREFIX)
+          )
+          .forEach((key) => removeCookie(key, { path: '/' }))
       }
     })()
   }
@@ -88,7 +106,7 @@ export const useGameState = (
     runs,
     targetRun,
     guesses,
-    gameWon,
+    gameEnded,
     attempts,
     handleGuess,
   }

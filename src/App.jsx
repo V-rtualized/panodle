@@ -13,14 +13,18 @@ import ThemeToggle from './Components/ThemeToggle'
 const MAX_GUESSES = 15
 
 const App = () => {
-  const [cookies, setCookie] = useCookies(['panodle_attempts', 'panodle_state'])
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'panodle_attempts',
+    'panodle_state',
+  ])
   const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
 
-  const { runs, targetRun, guesses, gameWon, attempts, handleGuess } =
+  const { runs, targetRun, guesses, gameEnded, attempts, handleGuess } =
     useGameState(
       cookies,
       setCookie,
+      removeCookie,
       MAX_GUESSES,
       setShowWinModal,
       setShowLossModal
@@ -42,7 +46,7 @@ const App = () => {
 
         <div className="mb-4 text-center">
           {MAX_GUESSES - attempts <= 5 && (
-            <p className="text-sm text-red-950">
+            <p className="text-sm text-red-950 dark:text-red-500">
               Guesses remaining: {MAX_GUESSES - attempts}
             </p>
           )}
@@ -53,12 +57,12 @@ const App = () => {
           onGuessChange={handleInputChange}
           onSuggestionClick={handleSuggestionClick}
           suggestions={suggestions}
-          disabled={gameWon}
+          disabled={gameEnded}
         />
 
         <SubmitButton
           onClick={() => handleGuess(guess, setGuess)}
-          disabled={!guess || gameWon}
+          disabled={!guess || gameEnded}
         />
 
         <GuessHistory guesses={guesses} />
