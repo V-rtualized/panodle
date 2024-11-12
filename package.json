@@ -11,13 +11,15 @@
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
     "recharts": "^2.13.3",
+    "serve": "^14.2.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "format": "npx prettier src --write",
-    "verify": "node src/scripts/verify.mjs"
+    "verify": "node src/scripts/verify.mjs",
+    "serve": "npx serve -s build"
   },
   "eslintConfig": {
     "extends": [
