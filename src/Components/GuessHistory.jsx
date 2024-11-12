@@ -1,5 +1,5 @@
-import React from "react"
-import GuessResult from "./GuessResult"
+import React from 'react'
+import GuessResult from './GuessResult'
 
 const GuessHistory = ({ guesses }) => {
   return (
@@ -8,7 +8,7 @@ const GuessHistory = ({ guesses }) => {
         <GuessResult key={index} guessResult={guessResult} />
       ))}
     </div>
-  );
-};
+  )
+}
 
 export default GuessHistory

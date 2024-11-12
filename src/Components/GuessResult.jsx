@@ -1,5 +1,5 @@
-import React from "react"
-import ComparisonIcon from "./ComparisonIcon";
+import React from 'react'
+import ComparisonIcon from './ComparisonIcon'
 
 const GuessResult = ({ guessResult }) => {
   return (
@@ -16,7 +16,7 @@ const GuessResult = ({ guessResult }) => {
           ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default GuessResult

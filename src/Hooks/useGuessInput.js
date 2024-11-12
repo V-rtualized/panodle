@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 export const useGuessInput = (runs) => {
-  const [guess, setGuess] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [guess, setGuess] = useState('')
+  const [suggestions, setSuggestions] = useState([])
 
   const handleInputChange = (e) => {
-    const input = e.target.value;
-    setGuess(input);
-    
+    const input = e.target.value
+    setGuess(input)
+
     if (input.length > 0) {
       const filtered = runs
-        .filter(run => run.Name.toLowerCase().includes(input.toLowerCase()))
-        .map(run => run.Name);
-      setSuggestions(filtered);
+        .filter((run) => run.Name.toLowerCase().includes(input.toLowerCase()))
+        .map((run) => run.Name)
+      setSuggestions(filtered)
     } else {
-      setSuggestions([]);
+      setSuggestions([])
     }
-  };
+  }
 
   const handleSuggestionClick = (suggestion) => {
-    setGuess(suggestion);
-    setSuggestions([]);
-  };
+    setGuess(suggestion)
+    setSuggestions([])
+  }
 
   return {
     guess,
@@ -29,6 +29,6 @@ export const useGuessInput = (runs) => {
     suggestions,
     setSuggestions,
     handleInputChange,
-    handleSuggestionClick
-  };
-};
+    handleSuggestionClick,
+  }
+}

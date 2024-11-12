@@ -1,6 +1,12 @@
-import React from "react"
+import React from 'react'
 
-const RunInput = ({ guess, onGuessChange, onSuggestionClick, suggestions, disabled }) => {
+const RunInput = ({
+  guess,
+  onGuessChange,
+  onSuggestionClick,
+  suggestions,
+  disabled,
+}) => {
   return (
     <div className="relative">
       <input
@@ -25,7 +31,7 @@ const RunInput = ({ guess, onGuessChange, onSuggestionClick, suggestions, disabl
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default RunInput
