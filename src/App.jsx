@@ -82,9 +82,9 @@ const App = () => {
         <div className="text-slate-500 px-6">
           <p className="py-1">* Some newer runs may be missing due to lack of data such as "Wild Things", "Evasion", "Yeti", and "Paranormal."</p>
           <p className="py-1">* The "Lift" property usually means the lowest lift that can be used to access a given run, but in cases like "Fritz" or "Picture Perfect" the data is opinionated.</p>
-          <p className="py-1">* The "Zone" property usually corrosponds to which zone a majority of the run is contained in, see <a className="underline text-pano" href="https://github.com/V-rtualized/panodle/blob/main/zone_map.png">this map</a> for zone coverage.</p>
+          <p className="py-1">* The "Zone" property usually corrosponds to which zone a majority of the run is contained in, see <a className="underline text-pano" target="_blank" rel="noopener noreferrer" href="https://github.com/V-rtualized/panodle/blob/main/zone_map.png">this map</a> for zone coverage.</p>
           <p className="py-1">* Some runs have multiple difficulties at different points on the mountain, their difficulty in this game will always be listed as the higher of the two.</p>
-          <p className="py-1">* The "Features" property is very opinionated and a run's features can change within a ski season, if you feel they don't represent the actual run please <a className="underline text-pano" href="https://github.com/V-rtualized/panodle/issues">open an issue here.</a></p>
+          <p className="py-1">* The "Features" property is very opinionated and a run's features can change within a ski season, if you feel they don't represent the actual run please <a className="underline text-pano" target="_blank" rel="noopener noreferrer" href="https://github.com/V-rtualized/panodle/issues">open an issue here.</a></p>
         </div>
       </div>
     </div>
