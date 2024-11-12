@@ -3,7 +3,7 @@ import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 
-const StatsModal = ({ isOpen, onClose, attempts }) => {
+const WinModal = ({ isOpen, onClose, attempts }) => {
   const [chartData, setChartData] = useState([])
   const [cookies] = useCookies(['panodle_attempts'])
 
@@ -37,13 +37,14 @@ const StatsModal = ({ isOpen, onClose, attempts }) => {
       const data = getLast7DaysData()
       setChartData(data)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, cookies.panodle_attempts, attempts])
 
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
+      <div className="bg-stone-100 dark:bg-stone-800 rounded-lg p-6 max-w-md w-full relative">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -51,7 +52,9 @@ const StatsModal = ({ isOpen, onClose, attempts }) => {
           <XIcon size={20} />
         </button>
 
-        <h2 className="text-xl font-bold mb-4 text-center">Congratulations!</h2>
+        <h2 className="text-xl font-bold mb-4 text-center text-pano">
+          Congratulations!
+        </h2>
 
         <div className="mb-4 text-center">
           <p className="text-lg">
@@ -79,6 +82,11 @@ const StatsModal = ({ isOpen, onClose, attempts }) => {
               domain={[0, 'auto']}
             />
             <Tooltip
+              contentStyle={
+                document.documentElement.classList.contains('dark') && {
+                  backgroundColor: 'black',
+                }
+              }
               formatter={(value) =>
                 value === 0 ? 'No attempt' : `${value} attempts`
               }
@@ -96,4 +104,4 @@ const StatsModal = ({ isOpen, onClose, attempts }) => {
   )
 }
 
-export default StatsModal
+export default WinModal

@@ -3,27 +3,28 @@ import { useCookies } from 'react-cookie'
 import Header from './Components/Header'
 import RunInput from './Components/RunInput'
 import SubmitButton from './Components/SubmitButton'
-import StatsModal from './Components/StatsModal'
+import WinModal from './Components/WinModal'
 import GuessHistory from './Components/GuessHistory'
 import { useGameState } from './Hooks/useGameState'
 import { useGuessInput } from './Hooks/useGuessInput'
 import LossModal from './Components/LossModal'
+import ThemeToggle from './Components/ThemeToggle'
 
 const MAX_GUESSES = 20
 
 const App = () => {
   const [cookies, setCookie] = useCookies(['panodle_attempts', 'panodle_state'])
-  const [showStats, setShowWinModal] = useState(null)
+  const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
 
-  const {
-    runs,
-    targetRun,
-    guesses,
-    gameWon,
-    attempts,
-    handleGuess
-  } = useGameState(cookies, setCookie, MAX_GUESSES, setShowWinModal, setShowLossModal)
+  const { runs, targetRun, guesses, gameWon, attempts, handleGuess } =
+    useGameState(
+      cookies,
+      setCookie,
+      MAX_GUESSES,
+      setShowWinModal,
+      setShowLossModal
+    )
 
   const {
     guess,
@@ -33,42 +34,47 @@ const App = () => {
     handleSuggestionClick,
   } = useGuessInput(runs)
 
-
   return (
-    <div className="max-w-4xl mt-12 mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <Header />
+    <div className="h-screen w-full bg-white dark:bg-stone-900 text-black dark:text-white pt-12 cursor-default">
+      <div className="max-w-4xl mx-auto p-6 bg-stone-100 dark:bg-stone-800 rounded-lg shadow-lg">
+        <ThemeToggle />
+        <Header />
 
-      <div className="mb-4 text-center">
-        {MAX_GUESSES - attempts <= 5 && (
-          <p className="text-sm text-red-950">
-            Guesses remaining: {MAX_GUESSES - attempts}
-          </p>
-        )}
+        <div className="mb-4 text-center">
+          {MAX_GUESSES - attempts <= 5 && (
+            <p className="text-sm text-red-950">
+              Guesses remaining: {MAX_GUESSES - attempts}
+            </p>
+          )}
+        </div>
+
+        <RunInput
+          guess={guess}
+          onGuessChange={handleInputChange}
+          onSuggestionClick={handleSuggestionClick}
+          suggestions={suggestions}
+          disabled={gameWon}
+        />
+
+        <SubmitButton
+          onClick={() => handleGuess(guess, setGuess)}
+          disabled={!guess || gameWon}
+        />
+
+        <GuessHistory guesses={guesses} />
+
+        <WinModal
+          isOpen={showWinModal}
+          onClose={() => setShowWinModal(false)}
+          attempts={attempts}
+        />
+
+        <LossModal
+          isOpen={showLossModal}
+          onClose={() => setShowLossModal(false)}
+          targetRun={targetRun}
+        />
       </div>
-
-      <RunInput
-        guess={guess}
-        onGuessChange={handleInputChange}
-        onSuggestionClick={handleSuggestionClick}
-        suggestions={suggestions}
-        disabled={gameWon}
-      />
-
-      <SubmitButton onClick={() => handleGuess(guess, setGuess)} disabled={!guess || gameWon} />
-
-      <GuessHistory guesses={guesses} />
-
-      <StatsModal
-        isOpen={showStats}
-        onClose={() => setShowWinModal(false)}
-        attempts={attempts}
-      />
-
-      <LossModal
-        isOpen={showLossModal}
-        onClose={() => setShowLossModal(false)}
-        targetRun={targetRun}
-      />
     </div>
   )
 }
