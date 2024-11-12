@@ -10,14 +10,14 @@ const DIFFICULTY_COLORS = {
   Black: '#000000',
 }
 
-const DifficultyIcon = ({ difficulty }) => {
+const DifficultyIcon = ({ difficulty, stroke }) => {
   switch (difficulty) {
     case 'Blue':
       return (
         <Square
           alt={'Ski difficulty'}
           fill={DIFFICULTY_COLORS['Blue']}
-          stroke={'white'}
+          stroke={stroke || 'white'}
           height={20}
           style={{
             paddingTop: 5,
@@ -30,7 +30,7 @@ const DifficultyIcon = ({ difficulty }) => {
         <Diamond
           alt={'Ski difficulty'}
           fill={DIFFICULTY_COLORS['Black']}
-          stroke={'white'}
+          stroke={stroke || 'white'}
           height={20}
           style={{
             paddingTop: 5,
@@ -43,7 +43,7 @@ const DifficultyIcon = ({ difficulty }) => {
         <DDiamond
           alt={'Ski difficulty'}
           fill={DIFFICULTY_COLORS['Black']}
-          stroke={'white'}
+          stroke={stroke || 'white'}
           height={20}
           style={{
             paddingTop: 5,
@@ -56,7 +56,7 @@ const DifficultyIcon = ({ difficulty }) => {
         <Circle
           alt={'Ski difficulty'}
           fill={DIFFICULTY_COLORS['Green']}
-          stroke={'white'}
+          stroke={stroke || 'white'}
           height={20}
           style={{
             paddingTop: 5,

@@ -28,7 +28,7 @@ const RunInput = ({
                 className="px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                 onClick={() => onSuggestionClick(suggestion)}
               >
-                <div className="flex flex-row">
+                <div className="flex items-center gap-2">
                   <DifficultyIcon difficulty={suggestion.Difficulty} />
                   {suggestion.Name}
                 </div>

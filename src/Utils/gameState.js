@@ -1,7 +1,13 @@
 export const compressGameData = (guesses) => {
   return guesses.map((guess) => ({
     n: guess.run.Name,
+    l: guess.run.Lift,
+    z: guess.run.Zone,
     d: guess.run.Difficulty,
+    f: guess.run.Features,
+    ln: guess.run.Length,
+    s: guess.run.StartingElevation,
+    e: guess.run.EndingElevation,
     c: {
       l: guess.comparison.Lift === 'correct' ? 'c' : 'i',
       z: guess.comparison.Zone === 'correct' ? 'c' : 'i',
@@ -16,7 +22,16 @@ export const compressGameData = (guesses) => {
 
 export const decompressGameData = (compressedGuesses) => {
   return compressedGuesses.map((guess) => ({
-    run: { Name: guess.n, Difficulty: guess.d },
+    run: {
+      Name: guess.n,
+      Lift: guess.l,
+      Zone: guess.z,
+      Difficulty: guess.d,
+      Features: guess.f,
+      Length: parseInt(guess.ln),
+      StartingElevation: parseInt(guess.s),
+      EndingElevation: parseInt(guess.e),
+    },
     comparison: {
       Name: guess.n,
       Lift: guess.c.l === 'c' ? 'correct' : 'incorrect',

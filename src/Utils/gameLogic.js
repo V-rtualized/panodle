@@ -43,6 +43,22 @@ export const compareFeatures = (guessFeatures, targetFeatures) => {
   return 'incorrect'
 }
 
+const getRelativeComparisonHelper = (value, target) => {
+  if (value === target) {
+    return 'correct'
+  }
+  if (value < target) {
+    if (value < target * 0.75) {
+      return 'mhigher'
+    }
+    return 'higher'
+  }
+  if (value > target * 1.5) {
+    return 'mlower'
+  }
+  return 'lower'
+}
+
 export const getComparison = (guessedRun, targetRun) => {
   return {
     Name: guessedRun.Name,
@@ -53,23 +69,14 @@ export const getComparison = (guessedRun, targetRun) => {
       targetRun.Difficulty
     ),
     Features: compareFeatures(guessedRun.Features, targetRun.Features),
-    Length:
-      guessedRun.Length === targetRun.Length
-        ? 'correct'
-        : guessedRun.Length < targetRun.Length
-          ? 'higher'
-          : 'lower',
-    StartingElevation:
-      guessedRun.StartingElevation === targetRun.StartingElevation
-        ? 'correct'
-        : guessedRun.StartingElevation < targetRun.StartingElevation
-          ? 'higher'
-          : 'lower',
-    EndingElevation:
-      guessedRun.EndingElevation === targetRun.EndingElevation
-        ? 'correct'
-        : guessedRun.EndingElevation < targetRun.EndingElevation
-          ? 'higher'
-          : 'lower',
+    Length: getRelativeComparisonHelper(guessedRun.Length, targetRun.Length),
+    StartingElevation: getRelativeComparisonHelper(
+      guessedRun.StartingElevation - 1000,
+      targetRun.StartingElevation - 1000
+    ),
+    EndingElevation: getRelativeComparisonHelper(
+      guessedRun.EndingElevation - 1000,
+      targetRun.EndingElevation - 1000
+    ),
   }
 }
