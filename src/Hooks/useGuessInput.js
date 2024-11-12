@@ -11,7 +11,7 @@ export const useGuessInput = (runs) => {
     if (input.length > 0) {
       const filtered = runs
         .filter((run) => run.Name.toLowerCase().includes(input.toLowerCase()))
-        .map((run) => run.Name)
+        .map((run) => run)
       setSuggestions(filtered)
     } else {
       setSuggestions([])
@@ -19,7 +19,7 @@ export const useGuessInput = (runs) => {
   }
 
   const handleSuggestionClick = (suggestion) => {
-    setGuess(suggestion)
+    setGuess(suggestion.Name)
     setSuggestions([])
   }
 

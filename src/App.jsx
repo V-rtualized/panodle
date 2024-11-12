@@ -10,7 +10,7 @@ import { useGuessInput } from './Hooks/useGuessInput'
 import LossModal from './Components/LossModal'
 import ThemeToggle from './Components/ThemeToggle'
 
-const MAX_GUESSES = 20
+const MAX_GUESSES = 15
 
 const App = () => {
   const [cookies, setCookie] = useCookies(['panodle_attempts', 'panodle_state'])
@@ -35,7 +35,7 @@ const App = () => {
   } = useGuessInput(runs)
 
   return (
-    <div className="h-screen w-full bg-white dark:bg-slate-900 text-black dark:text-white pt-12 cursor-default">
+    <div className="min-h-screen h-full w-full bg-white dark:bg-slate-900 text-black dark:text-white py-12 cursor-default">
       <div className="max-w-4xl mx-auto p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-lg">
         <ThemeToggle />
         <Header />

@@ -1,4 +1,5 @@
 import React from 'react'
+import DifficultyIcon from './DifficultyIcon'
 
 const RunInput = ({
   guess,
@@ -19,15 +20,20 @@ const RunInput = ({
       />
       {suggestions.length > 0 && (
         <div className="absolute z-10 w-full bg-white dark:bg-black border dark:border-stone-600 rounded-md shadow-lg mt-1 max-h-48 overflow-y-auto">
-          {suggestions.map((suggestion, index) => (
-            <div
-              key={index}
-              className="px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
-              onClick={() => onSuggestionClick(suggestion)}
-            >
-              {suggestion}
-            </div>
-          ))}
+          {suggestions
+            .sort((a, b) => a.Name > b.Name)
+            .map((suggestion, index) => (
+              <div
+                key={index}
+                className="px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                onClick={() => onSuggestionClick(suggestion)}
+              >
+                <div className="flex flex-row">
+                  <DifficultyIcon difficulty={suggestion.Difficulty} />
+                  {suggestion.Name}
+                </div>
+              </div>
+            ))}
         </div>
       )}
     </div>
