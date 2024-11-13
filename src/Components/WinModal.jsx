@@ -11,6 +11,7 @@ const WinModal = ({ isOpen, onClose, attempts }) => {
   const getLast7DaysData = () => {
     const data = []
     const today = new Date()
+    today.setHours(today.getHours() - 7) // UTC to MST
     const cookieData = cookies.panodle_attempts || {}
 
     for (let i = 6; i >= 0; i--) {

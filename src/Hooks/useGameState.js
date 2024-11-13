@@ -65,7 +65,9 @@ export const useGameState = (
       const rows = await loadRunData()
       setRuns(rows)
 
-      const today = new Date().toISOString().split('T')[0]
+      const date = new Date()
+      date.setHours(date.getHours() - 7) // UTC to MST
+      const today = date.toISOString().split('T')[0]
       clearOldGameState(cookies, removeCookie)
 
       if (dailyData[today]) {

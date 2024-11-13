@@ -39,6 +39,7 @@ const verifyData = async () => {
 
     let dailyValue = undefined
     let date = new Date()
+    date.setHours(date.getHours() - 7) // UTC to MST
     date.setDate(date.getDate() - 1)
 
     do {
