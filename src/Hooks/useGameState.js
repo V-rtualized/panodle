@@ -19,7 +19,8 @@ export const useGameState = (
   removeCookie,
   MAX_GUESSES,
   setShowWinModal,
-  setShowLossModal
+  setShowLossModal,
+  daily
 ) => {
   const [runs, setRuns] = useState([])
   const [targetRun, setTargetRun] = useState(null)
@@ -44,19 +45,21 @@ export const useGameState = (
     setGuess('')
 
     // Save the new guess
-    saveGuess(setCookie, guessResult, newGuesses.length - 1)
+    if (daily) saveGuess(setCookie, guessResult, newGuesses.length - 1)
 
     if (guessedRun.Name === targetRun.Name) {
       setGameEnded(true)
       setShowWinModal(true)
-      saveGameState(setCookie, true, false)
-      saveAttempts(setCookie, cookies, newAttempts)
+      if (daily) {
+        saveGameState(setCookie, true, false)
+        saveAttempts(setCookie, cookies, newAttempts)
+      }
     } else if (newAttempts >= MAX_GUESSES) {
       setGameEnded(true)
       setShowLossModal(true)
-      saveGameState(setCookie, false, true)
+      if (daily) saveGameState(setCookie, false, true)
     } else {
-      saveGameState(setCookie, false, false)
+      if (daily) saveGameState(setCookie, false, false)
     }
   }
 
@@ -104,6 +107,17 @@ export const useGameState = (
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(setupGame, [])
 
+  const doRandomRun = async () => {
+    const rows = await loadRunData()
+    setRuns(rows)
+
+    const randomRun = rows[Math.floor(Math.random() * rows.length)]
+    setTargetRun(randomRun)
+    setGuesses([])
+    setGameEnded(false)
+    setAttempts(0)
+  }
+
   return {
     runs,
     targetRun,
@@ -111,5 +125,6 @@ export const useGameState = (
     gameEnded,
     attempts,
     handleGuess,
+    doRandomRun,
   }
 }

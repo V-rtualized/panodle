@@ -1,9 +1,9 @@
-import { XIcon, Clipboard, Send } from 'lucide-react'
+import { XIcon, Clipboard, Send, Dices, Undo2 } from 'lucide-react'
 import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 
-const WinModal = ({ isOpen, onClose, attempts }) => {
+const WinModal = ({ isOpen, onClose, attempts, targetRun, daily, doRandomRun }) => {
   const [chartData, setChartData] = useState([])
   const [cookies] = useCookies(['panodle_attempts'])
   const [copied, setCopied] = useState(false)
@@ -72,12 +72,18 @@ const WinModal = ({ isOpen, onClose, attempts }) => {
 
         <div className="mb-4 text-center">
           <p className="text-lg">
-            You found the run in <span className="font-bold">{attempts}</span>{' '}
+            The run was: <span className="font-bold">{targetRun.Name}</span>
+          </p>
+        </div>
+
+        <div className="mb-4 text-center">
+          <p className="text-lg">
+            You found the {!daily && 'random' } run in <span className="font-bold">{attempts}</span>{' '}
             attempts!
           </p>
         </div>
 
-        <div className="w-full h-48">
+        {daily && <div className="w-full h-48">
           <BarChart
             width={350}
             height={180}
@@ -112,20 +118,47 @@ const WinModal = ({ isOpen, onClose, attempts }) => {
               minPointSize={2}
             />
           </BarChart>
-        </div>
+        </div>}
+
+        {!daily && 
+        <div className="mb-6 text-center">
+          <p className="text-sm italic">
+            This was a random run, it will not be saved to your history
+          </p>
+        </div>}
           
         <div className="mb-4 text-center space-y-4">
-          <button
+          {daily && <button
             onClick={handleShare}
             className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
               copied 
                 ? 'bg-green-500 hover:bg-green-600' 
                 : 'bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano'
-            } text-white`}
+            } text-white mr-2`}
           >
             <div className="flex text-center gap-2">
               {copied ? <Clipboard size={20} className="mt-0.5" /> : <Send size={20} className="mt-0.5" />}
               {copied ? 'Copied to Clipboard!' : 'Share'}
+            </div>
+          </button>}
+
+          {!daily && <button
+            onClick={() => window.location.reload()}
+            className={`px-4 py-2 rounded-lg transition-colors duration-200 bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano text-white mr-2`}
+          >
+            <div className="flex text-center gap-2">
+              <Undo2 size={20} className="mt-0.5" />
+              Back to Daily
+            </div>
+          </button>}
+
+          <button
+            onClick={() => {onClose();doRandomRun()}}
+            className={`px-4 py-2 rounded-lg transition-colors duration-200 bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano text-white`}
+          >
+            <div className="flex text-center gap-2">
+              <Dices size={20} className="mt-0.5" />
+              Play Random Run
             </div>
           </button>
         </div>

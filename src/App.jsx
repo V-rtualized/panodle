@@ -19,15 +19,17 @@ const App = () => {
   ])
   const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
+  const [daily, setDaily] = useState(true)
 
-  const { runs, targetRun, guesses, gameEnded, attempts, handleGuess } =
+  const { runs, targetRun, guesses, gameEnded, attempts, handleGuess, doRandomRun } =
     useGameState(
       cookies,
       setCookie,
       removeCookie,
       MAX_GUESSES,
       setShowWinModal,
-      setShowLossModal
+      setShowLossModal,
+      daily
     )
 
   const {
@@ -42,7 +44,7 @@ const App = () => {
     <div className="min-h-screen h-full w-full bg-white dark:bg-slate-900 text-black dark:text-white py-12 cursor-default">
       <div className="max-w-4xl mx-auto p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-lg">
         <ThemeToggle />
-        <Header />
+        <Header daily={daily} />
 
         <div className="mb-4 text-center">
           {MAX_GUESSES - attempts <= 5 && (
@@ -71,12 +73,17 @@ const App = () => {
           isOpen={showWinModal}
           onClose={() => setShowWinModal(false)}
           attempts={attempts}
+          targetRun={targetRun}
+          daily={daily}
+          doRandomRun={() => {setDaily(false);doRandomRun()}}
         />
 
         <LossModal
           isOpen={showLossModal}
           onClose={() => setShowLossModal(false)}
           targetRun={targetRun}
+          daily={daily}
+          doRandomRun={() => {setDaily(false);doRandomRun()}}
         />
 
         <div className="text-slate-500 px-6">
