@@ -1,5 +1,5 @@
 import React from 'react'
-import DifficultyIcon from './DifficultyIcon'
+import DifficultyIcon from '../game/icons/DifficultyIcon'
 
 const RunInput = ({
   guess,

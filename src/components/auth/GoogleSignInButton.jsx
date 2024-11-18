@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAuth } from '../Contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
 

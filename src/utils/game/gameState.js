@@ -1,10 +1,6 @@
-import {
-  getComparison,
-  getSecondsUntilMidnight,
-  getTodayString,
-} from './gameLogic'
-
-const GAME_STATE_KEY = 'panodle_game_state'
+import { COOKIE_NAMES } from '../constants'
+import { getTodayString, getSecondsUntilMidnight } from '../date/dateHelpers'
+import { getComparison } from './gameLogic'
 
 export const saveGameState = (
   setCookie,
@@ -19,7 +15,7 @@ export const saveGameState = (
     lost,
   }
 
-  setCookie(GAME_STATE_KEY, state, {
+  setCookie(COOKIE_NAMES.GAME_STATE, state, {
     path: '/',
     maxAge: getSecondsUntilMidnight(),
     sameSite: 'lax',
@@ -27,17 +23,9 @@ export const saveGameState = (
 }
 
 export const loadGameState = async (cookies, supabase, targetRun) => {
-  const savedState = cookies[GAME_STATE_KEY]
+  const savedState = cookies[COOKIE_NAMES.GAME_STATE]
 
-  if (!savedState) {
-    return {
-      guesses: [],
-      gameEnded: false,
-      attempts: 0,
-    }
-  }
-
-  if (savedState.date !== getTodayString()) {
+  if (!savedState || savedState.date !== getTodayString()) {
     return {
       guesses: [],
       gameEnded: false,
@@ -95,10 +83,10 @@ export const loadGameState = async (cookies, supabase, targetRun) => {
 }
 
 export const clearOldGameState = (cookies, removeCookie) => {
-  const savedState = cookies[GAME_STATE_KEY]
+  const savedState = cookies[COOKIE_NAMES.GAME_STATE]
   if (!savedState) return
 
   if (savedState.date !== getTodayString()) {
-    removeCookie(GAME_STATE_KEY, { path: '/' })
+    removeCookie(COOKIE_NAMES.GAME_STATE, { path: '/' })
   }
 }

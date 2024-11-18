@@ -1,9 +1,10 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
+import { COOKIE_NAMES } from '../../utils/constants'
 
 const ThemeToggle = () => {
-  const [cookies, setCookie] = useCookies(['panodle_theme'])
+  const [cookies, setCookie] = useCookies([COOKIE_NAMES.THEME])
   const [isDark, setIsDark] = useState(() => {
     if (cookies.panodle_theme) {
       return cookies.panodle_theme
@@ -21,7 +22,7 @@ const ThemeToggle = () => {
     } else {
       root.classList.remove('dark')
     }
-    setCookie('panodle_theme', isDark, {
+    setCookie(COOKIE_NAMES.THEME, isDark, {
       path: '/',
       sameSite: true,
     })

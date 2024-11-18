@@ -1,35 +1,19 @@
 import React, { useState } from 'react'
-import { useCookies } from 'react-cookie'
-import Header from './Components/Header'
-import RunInput from './Components/RunInput'
-import SubmitButton from './Components/SubmitButton'
-import WinModal from './Components/WinModal'
-import GuessHistory from './Components/GuessHistory'
-import { useGameState } from './Hooks/useGameState'
-import { useGuessInput } from './Hooks/useGuessInput'
-import LossModal from './Components/LossModal'
-
-const MAX_GUESSES = 15
+import Header from './components/layout/Header'
+import RunInput from './components/layout/RunInput'
+import SubmitButton from './components/layout/SubmitButton'
+import WinModal from './components/game/modals/WinModal'
+import GuessHistory from './components/game/GuessHistory/GuessHistory'
+import { useGameState, useGuessInput } from './hooks'
+import LossModal from './components/game/modals/LossModal'
 
 const App = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([
-    'panodle_game_state',
-    'panodle_theme',
-  ])
   const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
   const [daily, setDaily] = useState(true)
 
   const { targetRun, guesses, gameEnded, attempts, handleGuess, doRandomRun } =
-    useGameState(
-      cookies,
-      setCookie,
-      removeCookie,
-      MAX_GUESSES,
-      setShowWinModal,
-      setShowLossModal,
-      daily
-    )
+    useGameState(setShowWinModal, setShowLossModal, daily)
 
   const {
     guess,
@@ -42,15 +26,7 @@ const App = () => {
   return (
     <div className="px-2 min-h-screen h-full w-full bg-white dark:bg-slate-900 text-black dark:text-white py-12 cursor-default">
       <div className="max-w-4xl mx-auto p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-lg">
-        <Header daily={daily} />
-
-        <div className="mb-4 text-center">
-          {MAX_GUESSES - attempts <= 5 && (
-            <p className="text-sm text-red-950 dark:text-red-500">
-              Guesses remaining: {MAX_GUESSES - attempts}
-            </p>
-          )}
-        </div>
+        <Header daily={daily} attempts={attempts} />
 
         <RunInput
           guess={guess}

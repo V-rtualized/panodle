@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Runs from '../runs.json'
+import Runs from '../../runs.json'
 
 export const useGuessInput = () => {
   const [guess, setGuess] = useState('')

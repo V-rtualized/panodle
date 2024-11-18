@@ -1,8 +1,7 @@
-// components/GuessResult.js
 import React from 'react'
 import { ArrowUpIcon, ArrowDownIcon, CheckIcon } from 'lucide-react'
-import ComparisonIcon from './ComparisonIcon'
-import DifficultyIcon from './DifficultyIcon'
+import ComparisonIcon from '../icons/ComparisonIcon'
+import DifficultyIcon from '../icons/DifficultyIcon'
 
 const LocationCell = ({ label, value, isCorrect }) => (
   <div className="flex-1">
