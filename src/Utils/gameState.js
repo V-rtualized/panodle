@@ -1,17 +1,10 @@
-import { getComparison, getDateInMST } from './gameLogic'
+import {
+  getComparison,
+  getSecondsUntilMidnight,
+  getTodayString,
+} from './gameLogic'
 
 const GAME_STATE_KEY = 'panodle_game_state'
-
-// Helper to get today's date in MST as string
-const getTodayString = () => getDateInMST().toISOString().split('T')[0]
-
-// Calculate seconds until midnight MST
-const getSecondsUntilMidnightMST = () => {
-  const now = getDateInMST()
-  const midnight = new Date(now)
-  midnight.setHours(24, 0, 0, 0)
-  return Math.floor((midnight - now) / 1000)
-}
 
 export const saveGameState = (
   setCookie,
@@ -28,7 +21,7 @@ export const saveGameState = (
 
   setCookie(GAME_STATE_KEY, state, {
     path: '/',
-    maxAge: getSecondsUntilMidnightMST(),
+    maxAge: getSecondsUntilMidnight(),
     sameSite: 'lax',
   })
 }

@@ -1,3 +1,5 @@
+import moment from 'moment-timezone'
+
 export const difficultyToNum = (difficulty) => {
   switch (difficulty) {
     case 'Green':
@@ -84,8 +86,14 @@ export const getComparison = (guessedRun, targetRun) => {
   }
 }
 
+export const getTodayString = () => getDateInMST().format('YYYY-MM-DD')
+
+export const getSecondsUntilMidnight = () => {
+  const now = moment()
+  const midnight = now.clone().add(1, 'day').startOf('day')
+  return midnight.diff(now, 'seconds')
+}
+
 export const getDateInMST = () => {
-  const today = new Date()
-  today.setHours(today.getHours() - 7)
-  return today
+  return moment().tz('America/Edmonton')
 }
