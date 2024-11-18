@@ -14,28 +14,22 @@ const MAX_GUESSES = 15
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
     'panodle_game_state',
-    'panodle_theme'
+    'panodle_theme',
   ])
   const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
   const [daily, setDaily] = useState(true)
 
-  const {
-    targetRun,
-    guesses,
-    gameEnded,
-    attempts,
-    handleGuess,
-    doRandomRun,
-  } = useGameState(
-    cookies,
-    setCookie,
-    removeCookie,
-    MAX_GUESSES,
-    setShowWinModal,
-    setShowLossModal,
-    daily
-  )
+  const { targetRun, guesses, gameEnded, attempts, handleGuess, doRandomRun } =
+    useGameState(
+      cookies,
+      setCookie,
+      removeCookie,
+      MAX_GUESSES,
+      setShowWinModal,
+      setShowLossModal,
+      daily
+    )
 
   const {
     guess,

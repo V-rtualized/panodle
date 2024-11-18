@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     return () => {
       subscription?.unsubscribe()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supabase.auth])
 
   const signIn = async (response) => {

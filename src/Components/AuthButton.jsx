@@ -10,7 +10,9 @@ const AuthButton = () => {
       <div className="text-center">
         <span>
           Signed in as {user.user_metadata.full_name}.{' '}
-          <button onClick={signOut} className='text-pano underline'>Sign Out</button>
+          <button onClick={signOut} className="text-pano underline">
+            Sign Out
+          </button>
         </span>
       </div>
     )

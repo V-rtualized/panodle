@@ -57,7 +57,7 @@ const FeatureTag = ({ feature, status }) => (
 )
 
 const FeaturesCell = ({ features, comparison }) => {
-  const featuresList = features.length > 0? features : ['X']
+  const featuresList = features.length > 0 ? features : ['X']
 
   return (
     <div className="flex-1">
