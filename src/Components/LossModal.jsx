@@ -20,7 +20,7 @@ const LossModal = ({ isOpen, onClose, targetRun, daily, doRandomRun }) => {
             You've reached the maximum number of guesses.
           </p>
           <p className="text-lg">
-            The run was: <span className="font-bold">{targetRun.Name}</span>
+            The run was: <span className="font-bold">{targetRun.name}</span>
           </p>
         </div>
 

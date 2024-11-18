@@ -27,8 +27,8 @@ export const compareFeatures = (guessFeatures, targetFeatures) => {
   if (!guessFeatures && !targetFeatures) return 'correct'
   if (!guessFeatures || !targetFeatures) return 'incorrect'
 
-  const guessSet = new Set(guessFeatures.split(', '))
-  const targetSet = new Set(targetFeatures.split(', '))
+  const guessSet = new Set(guessFeatures)
+  const targetSet = new Set(targetFeatures)
 
   const intersection = [...guessSet].filter((x) => targetSet.has(x))
 
@@ -37,9 +37,12 @@ export const compareFeatures = (guessFeatures, targetFeatures) => {
     intersection.length === targetSet.size
   ) {
     return 'correct'
-  } else if (intersection.length > 0) {
+  }
+
+  if (intersection.length > 0) {
     return 'partial'
   }
+
   return 'incorrect'
 }
 
@@ -61,22 +64,22 @@ const getRelativeComparisonHelper = (value, target) => {
 
 export const getComparison = (guessedRun, targetRun) => {
   return {
-    Name: guessedRun.Name,
-    Lift: guessedRun.Lift === targetRun.Lift ? 'correct' : 'incorrect',
-    Zone: guessedRun.Zone === targetRun.Zone ? 'correct' : 'incorrect',
-    Difficulty: getHigherOrLowerDifficulty(
-      guessedRun.Difficulty,
-      targetRun.Difficulty
+    name: guessedRun.name,
+    lift: guessedRun.lift === targetRun.lift ? 'correct' : 'incorrect',
+    zone: guessedRun.zone === targetRun.zone ? 'correct' : 'incorrect',
+    difficulty: getHigherOrLowerDifficulty(
+      guessedRun.difficulty,
+      targetRun.difficulty
     ),
-    Features: compareFeatures(guessedRun.Features, targetRun.Features),
-    Length: getRelativeComparisonHelper(guessedRun.Length, targetRun.Length),
-    StartingElevation: getRelativeComparisonHelper(
-      guessedRun.StartingElevation - 1000,
-      targetRun.StartingElevation - 1000
+    features: compareFeatures(guessedRun.features, targetRun.features),
+    length: getRelativeComparisonHelper(guessedRun.length, targetRun.length),
+    starting_elevation: getRelativeComparisonHelper(
+      guessedRun.starting_elevation - 1000,
+      targetRun.starting_elevation - 1000
     ),
-    EndingElevation: getRelativeComparisonHelper(
-      guessedRun.EndingElevation - 1000,
-      targetRun.EndingElevation - 1000
+    ending_elevation: getRelativeComparisonHelper(
+      guessedRun.ending_elevation - 1000,
+      targetRun.ending_elevation - 1000
     ),
   }
 }

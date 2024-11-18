@@ -20,7 +20,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "format": "npx prettier src --write",
-    "verify": "node src/Scripts/verify.mjs",
     "serve": "npx serve -s build"
   },
   "eslintConfig": {

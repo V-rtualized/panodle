@@ -13,15 +13,14 @@ const MAX_GUESSES = 15
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
-    'panodle_attempts',
-    'panodle_state',
+    'panodle_game_state',
+    'panodle_theme'
   ])
   const [showWinModal, setShowWinModal] = useState(null)
   const [showLossModal, setShowLossModal] = useState(null)
   const [daily, setDaily] = useState(true)
 
   const {
-    runs,
     targetRun,
     guesses,
     gameEnded,
@@ -44,7 +43,7 @@ const App = () => {
     suggestions,
     handleInputChange,
     handleSuggestionClick,
-  } = useGuessInput(runs)
+  } = useGuessInput()
 
   return (
     <div className="px-2 min-h-screen h-full w-full bg-white dark:bg-slate-900 text-black dark:text-white py-12 cursor-default">

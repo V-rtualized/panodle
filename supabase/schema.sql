@@ -1,11 +1,28 @@
 -- Users table is automatically created by Supabase Auth
 -- Reference it as auth.users
 
+-- Create enum for difficulty levels
+CREATE TYPE difficulty_level AS ENUM ('Green', 'Blue', 'Black', 'Double Black');
+
+-- Runs table - stores all ski run information
+CREATE TABLE runs (
+    name TEXT PRIMARY KEY,
+    lift TEXT NOT NULL,
+    zone TEXT NOT NULL,
+    difficulty difficulty_level NOT NULL,
+    features TEXT[],
+    length INTEGER NOT NULL,
+    starting_elevation INTEGER NOT NULL,
+    ending_elevation INTEGER NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Daily Games table - tracks each day's game
 CREATE TABLE daily_games (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     date DATE NOT NULL UNIQUE,
-    target_run_name TEXT NOT NULL,
+    target_run_name TEXT REFERENCES runs(name) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -27,24 +44,32 @@ CREATE TABLE user_games (
 CREATE TABLE guesses (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_game_id UUID REFERENCES user_games(id) NOT NULL,
-    run_name TEXT NOT NULL,
+    run_name TEXT REFERENCES runs(name) NOT NULL,
     guess_number INTEGER NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE(user_game_id, guess_number)
 );
 
 -- Create indexes for common queries
+CREATE INDEX idx_runs_zone ON runs(zone);
+CREATE INDEX idx_runs_difficulty ON runs(difficulty);
 CREATE INDEX idx_daily_games_date ON daily_games(date);
 CREATE INDEX idx_user_games_user ON user_games(user_id);
 CREATE INDEX idx_user_games_daily_game ON user_games(daily_game_id);
 CREATE INDEX idx_guesses_run_name ON guesses(run_name);
 
 -- Enable Row Level Security (RLS)
+ALTER TABLE runs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE daily_games ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_games ENABLE ROW LEVEL SECURITY;
 ALTER TABLE guesses ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
+CREATE POLICY "Runs are viewable by everyone"
+    ON runs FOR SELECT
+    TO authenticated, anon
+    USING (true);
+
 CREATE POLICY "Daily games are viewable by everyone"
     ON daily_games FOR SELECT
     TO authenticated
@@ -80,6 +105,17 @@ CREATE POLICY "Users can only insert guesses for their own games"
             AND user_games.user_id = auth.uid()
         )
     );
+
+-- Function to split string to array for features
+CREATE OR REPLACE FUNCTION split_features(feature_str TEXT)
+RETURNS TEXT[] AS $$
+BEGIN
+    IF feature_str IS NULL OR feature_str = '' THEN
+        RETURN '{}';
+    END IF;
+    RETURN string_to_array(regexp_replace(feature_str, '\s*,\s*', ','), ',');
+END;
+$$ LANGUAGE plpgsql;
 
 -- Functions for leaderboard queries
 CREATE OR REPLACE FUNCTION get_daily_leaderboard(target_date DATE)

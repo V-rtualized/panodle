@@ -1,16 +1,10 @@
 import { useState, useEffect } from 'react'
-import { loadRunData } from '../Utils/dataLoader'
 import { getComparison, getDateInMST } from '../Utils/gameLogic'
 import { useSupabase } from '../Contexts/SupabaseContext'
 import {
-  GAME_STATE_PREFIX,
-  GUESS_PREFIX,
-  clearOldGameState,
-  loadGameState,
-  loadGuesses,
   saveGameState,
-  saveGuess,
-  saveAttempts,
+  loadGameState,
+  clearOldGameState,
 } from '../Utils/gameState'
 
 export const useGameState = (
@@ -23,7 +17,6 @@ export const useGameState = (
   daily
 ) => {
   const supabase = useSupabase()
-  const [runs, setRuns] = useState([])
   const [targetRun, setTargetRun] = useState(null)
   const [guesses, setGuesses] = useState([])
   const [gameEnded, setGameEnded] = useState(false)
@@ -39,28 +32,54 @@ export const useGameState = (
         .eq('date', date)
         .single()
 
-      if (error) {
-        //console.error('Error fetching specific date:', error)
-        return null
-      }
+      if (error || !data) return null
 
-      if (!data) {
-        //console.error('No data found for date:', date)
-        return null
-      }
+      const { data: run } = await supabase
+        .from('runs')
+        .select(
+          `
+          name,
+          lift,
+          zone,
+          difficulty,
+          features,
+          length,
+          starting_elevation,
+          ending_elevation
+        `
+        )
+        .eq('name', data.target_run_name)
+        .single()
 
-      console.log(data.target_run_name)
-
-      return data.target_run_name
+      return run
     } catch (error) {
-      //console.error('Unexpected error fetching daily run:', error)
+      console.error('Error fetching daily run:', error)
       return null
     }
   }
 
-  const handleGuess = (guess, setGuess) => {
-    const guessedRun = runs.find((run) => run.Name === guess)
-    if (!guessedRun) return
+  const handleGuess = async (guess, setGuess) => {
+    const { data: guessedRun, error } = await supabase
+      .from('runs')
+      .select(
+        `
+        name,
+        lift,
+        zone,
+        difficulty,
+        features,
+        length,
+        starting_elevation,
+        ending_elevation
+      `
+      )
+      .eq('name', guess)
+      .single()
+
+    if (error || !guessedRun) {
+      console.error('Failed to fetch guessed run:', error)
+      return
+    }
 
     const newAttempts = attempts + 1
     setAttempts(newAttempts)
@@ -74,68 +93,74 @@ export const useGameState = (
     setGuesses(newGuesses)
     setGuess('')
 
-    if (daily) saveGuess(setCookie, guessResult, newGuesses.length - 1)
+    if (daily) {
+      const guessedRunNames = newGuesses.map((g) => g.run.name).reverse()
+      const won = guessedRun.name === targetRun.name
+      const lost = newAttempts >= MAX_GUESSES
+      saveGameState(setCookie, guessedRunNames, won, lost)
+    }
 
-    if (guessedRun.Name === targetRun.Name) {
+    if (guessedRun.name === targetRun.name) {
       setGameEnded(true)
       setShowWinModal(true)
-      if (daily) {
-        saveGameState(setCookie, true, false)
-        saveAttempts(setCookie, cookies, newAttempts)
-      }
     } else if (newAttempts >= MAX_GUESSES) {
       setGameEnded(true)
       setShowLossModal(true)
-      if (daily) saveGameState(setCookie, false, true)
-    } else {
-      if (daily) saveGameState(setCookie, false, false)
     }
   }
 
   const setupGame = async () => {
-    const rows = await loadRunData()
-    setRuns(rows)
-
-    const today = getDateInMST().toISOString().split('T')[0]
     clearOldGameState(cookies, removeCookie)
 
+    let run
     if (daily) {
-      const dailyRunName = await fetchDailyRun()
-      if (dailyRunName) {
-        const dailyRun = rows.find((run) => run.Name === dailyRunName)
-        if (dailyRun) {
-          setTargetRun(dailyRun)
-        } else {
-          console.error(`Run ${dailyRunName} not found in runs data`)
-          return
-        }
-      } else {
-        console.error('No daily run found for today')
-        return
-      }
-    } else if (!targetRun) {
-      const randomRun = rows[Math.floor(Math.random() * rows.length)]
-      setTargetRun(randomRun)
+      run = await fetchDailyRun()
+    } else {
+      const { data: runs } = await supabase.from('runs').select('name')
+      const randomRun = runs[Math.floor(Math.random() * runs.length)]
+      const { data } = await supabase
+        .from('runs')
+        .select(
+          `
+          name,
+          lift,
+          zone,
+          difficulty,
+          features,
+          length,
+          starting_elevation,
+          ending_elevation
+        `
+        )
+        .eq('name', randomRun.name)
+        .single()
+      run = data
     }
 
-    const savedState = loadGameState(cookies, today)
-    if (savedState && savedState.d === today) {
-      const loadedGuesses = loadGuesses(cookies, today)
-      setGuesses(loadedGuesses)
-      setGameEnded(savedState.w || savedState.l)
-      setAttempts(loadedGuesses.length)
-      if (savedState.w) {
+    if (!run) {
+      console.error('Failed to fetch target run')
+      return
+    }
+
+    setTargetRun(run)
+
+    const {
+      guesses: savedGuesses,
+      gameEnded: savedGameEnded,
+      attempts: savedAttempts,
+    } = await loadGameState(cookies, supabase, run)
+
+    setGuesses(savedGuesses)
+    setGameEnded(savedGameEnded)
+    setAttempts(savedAttempts)
+
+    if (savedGameEnded) {
+      const won = savedGuesses[0]?.run.name === run.name
+      if (won) {
         setShowWinModal((prev) => (prev === null ? true : prev))
-      } else if (savedState.l) {
+      } else {
         setShowLossModal((prev) => (prev === null ? true : prev))
       }
-    } else {
-      Object.keys(cookies)
-        .filter(
-          (key) =>
-            key.startsWith(GAME_STATE_PREFIX) || key.startsWith(GUESS_PREFIX)
-        )
-        .forEach((key) => removeCookie(key, { path: '/' }))
     }
   }
 
@@ -145,18 +170,32 @@ export const useGameState = (
   }, [])
 
   const doRandomRun = async () => {
-    const rows = await loadRunData()
-    setRuns(rows)
+    const { data: runs } = await supabase.from('runs').select('name')
+    const randomRun = runs[Math.floor(Math.random() * runs.length)]
+    const { data } = await supabase
+      .from('runs')
+      .select(
+        `
+        name,
+        lift,
+        zone,
+        difficulty,
+        features,
+        length,
+        starting_elevation,
+        ending_elevation
+      `
+      )
+      .eq('name', randomRun.name)
+      .single()
 
-    const randomRun = rows[Math.floor(Math.random() * rows.length)]
-    setTargetRun(randomRun)
+    setTargetRun(data)
     setGuesses([])
     setGameEnded(false)
     setAttempts(0)
   }
 
   return {
-    runs,
     targetRun,
     guesses,
     gameEnded,

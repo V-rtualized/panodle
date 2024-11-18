@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import Runs from '../runs.json'
 
-export const useGuessInput = (runs) => {
+export const useGuessInput = () => {
   const [guess, setGuess] = useState('')
   const [suggestions, setSuggestions] = useState([])
 
@@ -9,9 +10,9 @@ export const useGuessInput = (runs) => {
     setGuess(input)
 
     if (input.length > 0) {
-      const filtered = runs
-        .filter((run) => run.Name.toLowerCase().includes(input.toLowerCase()))
-        .map((run) => run)
+      const filtered = Runs.filter((run) =>
+        run.name.toLowerCase().includes(input.toLowerCase())
+      ).map((run) => run)
       setSuggestions(filtered)
     } else {
       setSuggestions([])
@@ -19,7 +20,7 @@ export const useGuessInput = (runs) => {
   }
 
   const handleSuggestionClick = (suggestion) => {
-    setGuess(suggestion.Name)
+    setGuess(suggestion.name)
     setSuggestions([])
   }
 

@@ -1,0 +1,502 @@
+[
+  {
+    "name": "Eagle Glide",
+    "difficulty": "Green"
+  },
+  {
+    "name": "New Timer",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Taynton Trail",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Cauldron",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Ridgeback",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Funnel",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Stinger",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Star Fire",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Never Never Land",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Get Out!",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Heli Face",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "C Spine",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Donny B's",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Star Fire Cliffs",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "The Monster",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Heli High",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Ktunaxa",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Spectre",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Kinbasket",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Jekyll & Hyde",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Whitetail",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "B 1st",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Devil's Drop",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Outback Ridge",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Over Easy",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Fritz's",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Boomerang",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Out Rider",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Sunbird",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Detour",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Village Way",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Heaven Can Wait",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Chicken's Choice",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Little Dipper",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Whiskey Jack",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Secret Forest",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Triple Traverse",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Schober's Dream",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Draino",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Lower Bowl",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Marshall",
+    "difficulty": "Black"
+  },
+  {
+    "name": "CFI",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Stump Farm",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sunseeker",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sunna",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sun Bowl Trail",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sunset",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sundog",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sunburst",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Sunshine",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Alive Glades",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Canadian Way",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Schober's Glade",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Turnpike 1",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Landing Strip",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Stumbock's",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Laresser Lane",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Messerli's Mile",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "White Room",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Sidewinder Glades",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Last Chance",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Hideaway",
+    "difficulty": "Black"
+  },
+  {
+    "name": "View of 1000 Peaks",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Roy's Run",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Tree Time",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Getmedown",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "HLH",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Outer Limits",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Top of the World",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Zone 2",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Gun Barrel",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Trigger",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Tight Spots",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Powder Trail",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Showoff",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Hoggsflats",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Loose Moose",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Horseshoe",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Old Timer",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "2 Toby",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Cliff Glades",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Hay Fever",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Moose Trail",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Zehnder Way",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Madson's Mile",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Ostrander Alley",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Delesalle",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Strobl Strasse",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Mcintosh Way",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Dunes",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Toadstool",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Fat Chance",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "First Chance",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Pi",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Orca",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Champagne Surf",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Cafe",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Latte",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Mocha",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Elmo",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Trapper's Lynx",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Trapper's Ridge",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Stringer",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Canadian Discovery",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Bell's Landing",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Campbell's Canyon",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Millennium",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Downhill",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Tacky",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Rollercoaster",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Cow's Face",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Skyline",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Silky",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Liftline",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Deck's Cross",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Elkhorn",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Pod's",
+    "difficulty": "Black"
+  },
+  {
+    "name": "Surf",
+    "difficulty": "Double Black"
+  },
+  {
+    "name": "Chute",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "World Cup Way",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Picture Perfect",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Grice Paddy",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Skyway",
+    "difficulty": "Blue"
+  },
+  {
+    "name": "Beginner",
+    "difficulty": "Green"
+  },
+  {
+    "name": "Highway 1",
+    "difficulty": "Green"
+  }
+]

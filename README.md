@@ -25,6 +25,8 @@ Built with:
 - react-cookie for state management
 - Lucide React for icons
 - Recharts for statistics visualization
+- Supabase for authentication and database management
+- Google Cloud for authentication flow
 
 ## Contributing
 

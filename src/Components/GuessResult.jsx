@@ -57,7 +57,7 @@ const FeatureTag = ({ feature, status }) => (
 )
 
 const FeaturesCell = ({ features, comparison }) => {
-  const featuresList = features ? features.split(', ') : ['X']
+  const featuresList = features.length > 0? features : ['X']
 
   return (
     <div className="flex-1">
@@ -87,7 +87,7 @@ const GuessResult = ({ guessResult }) => {
   return (
     <div className="border dark:border-stone-600 rounded-lg p-4 bg-slate-50 dark:bg-slate-900">
       <div className="mb-4">
-        <div className="font-bold dark:text-white">{guessResult.run.Name}</div>
+        <div className="font-bold dark:text-white">{guessResult.run.name}</div>
       </div>
 
       <div className="space-y-4">
@@ -95,13 +95,13 @@ const GuessResult = ({ guessResult }) => {
         <div className="flex gap-4">
           <LocationCell
             label="Lift"
-            value={guessResult.run.Lift}
-            isCorrect={guessResult.comparison.Lift === 'correct'}
+            value={guessResult.run.lift}
+            isCorrect={guessResult.comparison.lift === 'correct'}
           />
           <LocationCell
             label="Zone"
-            value={guessResult.run.Zone}
-            isCorrect={guessResult.comparison.Zone === 'correct'}
+            value={guessResult.run.zone}
+            isCorrect={guessResult.comparison.zone === 'correct'}
           />
         </div>
 
@@ -109,14 +109,14 @@ const GuessResult = ({ guessResult }) => {
         <div className="flex gap-4">
           <div className="w-1/3">
             <DifficultyCell
-              difficulty={guessResult.run.Difficulty}
-              comparison={guessResult.comparison.Difficulty}
+              difficulty={guessResult.run.difficulty}
+              comparison={guessResult.comparison.difficulty}
             />
           </div>
           <div className="w-2/3">
             <FeaturesCell
-              features={guessResult.run.Features}
-              comparison={guessResult.comparison.Features}
+              features={guessResult.run.features}
+              comparison={guessResult.comparison.features}
             />
           </div>
         </div>
@@ -125,18 +125,18 @@ const GuessResult = ({ guessResult }) => {
         <div className="grid grid-cols-3 gap-4">
           <MetricCell
             label="Length"
-            value={guessResult.run.Length}
-            comparison={guessResult.comparison.Length}
+            value={guessResult.run.length}
+            comparison={guessResult.comparison.length}
           />
           <MetricCell
             label="Starting Elevation"
-            value={guessResult.run.StartingElevation}
-            comparison={guessResult.comparison.StartingElevation}
+            value={guessResult.run.starting_elevation}
+            comparison={guessResult.comparison.starting_elevation}
           />
           <MetricCell
             label="Ending Elevation"
-            value={guessResult.run.EndingElevation}
-            comparison={guessResult.comparison.EndingElevation}
+            value={guessResult.run.ending_elevation}
+            comparison={guessResult.comparison.ending_elevation}
           />
         </div>
       </div>

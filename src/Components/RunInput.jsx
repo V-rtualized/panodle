@@ -21,7 +21,7 @@ const RunInput = ({
       {suggestions.length > 0 && (
         <div className="absolute z-10 w-full bg-white dark:bg-black border dark:border-stone-600 rounded-md shadow-lg mt-1 max-h-48 overflow-y-auto">
           {suggestions
-            .sort((a, b) => a.Name > b.Name)
+            .sort((a, b) => a.name > b.name)
             .map((suggestion, index) => (
               <div
                 key={index}
@@ -29,8 +29,8 @@ const RunInput = ({
                 onClick={() => onSuggestionClick(suggestion)}
               >
                 <div className="flex items-center gap-2">
-                  <DifficultyIcon difficulty={suggestion.Difficulty} />
-                  {suggestion.Name}
+                  <DifficultyIcon difficulty={suggestion.difficulty} />
+                  {suggestion.name}
                 </div>
               </div>
             ))}
