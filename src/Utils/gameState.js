@@ -1,3 +1,5 @@
+import { getDateInMST } from "./gameLogic"
+
 export const compressGuess = (guess) => ({
   n: guess.run.Name,
   l: guess.run.Lift,
@@ -71,9 +73,7 @@ export const GUESS_PREFIX = 'panodle_guess'
 const ATTEMPTS_KEY = 'panodle_attempts'
 
 export const saveAttempts = (setCookie, cookies, newAttempts) => {
-  const date = new Date()
-  date.setHours(date.getHours() - 7) // UTC to MST
-  const today = date.toISOString().split('T')[0]
+  const today = getDateInMST().toISOString().split('T')[0]
   const existingAttempts = cookies[ATTEMPTS_KEY] || {}
   setCookie(
     ATTEMPTS_KEY,
@@ -90,9 +90,7 @@ export const saveAttempts = (setCookie, cookies, newAttempts) => {
 }
 
 export const saveGameState = (setCookie, won = false, lost = false) => {
-  const date = new Date()
-  date.setHours(date.getHours() - 7) // UTC to MST
-  const today = date.toISOString().split('T')[0]
+  const today = getDateInMST().toISOString().split('T')[0]
   setCookie(
     `${GAME_STATE_PREFIX}_${today}`,
     {
@@ -109,9 +107,7 @@ export const saveGameState = (setCookie, won = false, lost = false) => {
 }
 
 export const saveGuess = (setCookie, guess, index) => {
-  const date = new Date()
-  date.setHours(date.getHours() - 7) // UTC to MST
-  const today = date.toISOString().split('T')[0]
+  const today = getDateInMST().toISOString().split('T')[0]
   setCookie(
     `${GUESS_PREFIX}_${today}_${index}`,
     {
@@ -167,9 +163,7 @@ export const loadGuesses = (cookies, today) => {
 }
 
 export const clearOldGameState = (cookies, removeCookie) => {
-  const date = new Date()
-  date.setHours(date.getHours() - 7) // UTC to MST
-  const today = date.toISOString().split('T')[0]
+  const today = getDateInMST().toISOString().split('T')[0]
 
   Object.keys(cookies).forEach((key) => {
     if (

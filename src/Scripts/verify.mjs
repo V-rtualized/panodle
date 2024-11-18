@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import fs from 'fs/promises'
 import Papa from 'papaparse'
+import { getDateInMST } from '../Utils/gameLogic'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -38,8 +39,7 @@ const verifyData = async () => {
     const dailyData = JSON.parse(await fs.readFile(dailyDataPath, 'utf-8'))
 
     let dailyValue = undefined
-    let date = new Date()
-    date.setHours(date.getHours() - 7) // UTC to MST
+    let date = new getDateInMST()
     date.setDate(date.getDate() - 1)
 
     do {

@@ -80,3 +80,9 @@ export const getComparison = (guessedRun, targetRun) => {
     ),
   }
 }
+
+export const getDateInMST = () => {
+  const today = new Date()
+  today.setHours(today.getHours() - 7)
+  return today
+}

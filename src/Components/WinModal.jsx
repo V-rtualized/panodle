@@ -2,6 +2,7 @@ import { XIcon, Clipboard, Send, Dices, Undo2 } from 'lucide-react'
 import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { getDateInMST } from '../Utils/gameLogic'
 
 const WinModal = ({
   isOpen,
@@ -17,8 +18,7 @@ const WinModal = ({
 
   const getLast7DaysData = () => {
     const data = []
-    const today = new Date()
-    today.setHours(today.getHours() - 7) // UTC to MST
+    const today = getDateInMST()
     const cookieData = cookies.panodle_attempts || {}
 
     for (let i = 6; i >= 0; i--) {
