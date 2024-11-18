@@ -8,8 +8,6 @@ import GuessHistory from './Components/GuessHistory'
 import { useGameState } from './Hooks/useGameState'
 import { useGuessInput } from './Hooks/useGuessInput'
 import LossModal from './Components/LossModal'
-import ThemeToggle from './Components/ThemeToggle'
-import AuthButton from './Components/AuthButton'
 
 const MAX_GUESSES = 15
 
