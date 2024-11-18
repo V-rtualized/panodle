@@ -27,3 +27,5 @@ daily.json
 
 # dev
 .vscode
+.secrets
+.env

@@ -3,7 +3,14 @@ import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 
-const WinModal = ({ isOpen, onClose, attempts, targetRun, daily, doRandomRun }) => {
+const WinModal = ({
+  isOpen,
+  onClose,
+  attempts,
+  targetRun,
+  daily,
+  doRandomRun,
+}) => {
   const [chartData, setChartData] = useState([])
   const [cookies] = useCookies(['panodle_attempts'])
   const [copied, setCopied] = useState(false)
@@ -43,18 +50,18 @@ const WinModal = ({ isOpen, onClose, attempts, targetRun, daily, doRandomRun }) 
   }, [isOpen, cookies.panodle_attempts, attempts])
 
   const handleShare = async () => {
-    const shareText = `I beat today's Panodle in ${attempts} attempts! Can you beat it faster?\nhttps://panodle.virtualized.dev`;
-    
-    try {
-      await navigator.clipboard.writeText(shareText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 4000); // Reset after 2 seconds
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
-  };
+    const shareText = `I beat today's Panodle in ${attempts} attempts! Can you beat it faster?\nhttps://panodle.virtualized.dev`
 
-  if (!isOpen) return null;
+    try {
+      await navigator.clipboard.writeText(shareText)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 4000) // Reset after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err)
+    }
+  }
+
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -78,82 +85,96 @@ const WinModal = ({ isOpen, onClose, attempts, targetRun, daily, doRandomRun }) 
 
         <div className="mb-4 text-center">
           <p className="text-lg">
-            You found the {!daily && 'random' } run in <span className="font-bold">{attempts}</span>{' '}
-            attempts!
+            You found the {!daily && 'random'} run in{' '}
+            <span className="font-bold">{attempts}</span> attempts!
           </p>
         </div>
 
-        {daily && <div className="w-full h-48">
-          <BarChart
-            width={350}
-            height={180}
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-          >
-            <XAxis
-              dataKey="label"
-              tick={{ fontSize: 12 }}
-              interval={0}
-              tickFormatter={(value) => value}
-            />
-            <YAxis
-              label={{ value: 'Attempts', angle: -90 }}
-              allowDecimals={false}
-              domain={[0, 'auto']}
-            />
-            <Tooltip
-              contentStyle={
-                document.documentElement.classList.contains('dark') && {
-                  backgroundColor: 'black',
+        {daily && (
+          <div className="w-full h-48">
+            <BarChart
+              width={350}
+              height={180}
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            >
+              <XAxis
+                dataKey="label"
+                tick={{ fontSize: 12 }}
+                interval={0}
+                tickFormatter={(value) => value}
+              />
+              <YAxis
+                label={{ value: 'Attempts', angle: -90 }}
+                allowDecimals={false}
+                domain={[0, 'auto']}
+              />
+              <Tooltip
+                contentStyle={
+                  document.documentElement.classList.contains('dark') && {
+                    backgroundColor: 'black',
+                  }
                 }
-              }
-              formatter={(value) =>
-                value === 0 ? 'No attempt' : `${value} attempts`
-              }
-            />
-            <Bar
-              dataKey="attempts"
-              fill="#3B82F6"
-              name="Attempts"
-              minPointSize={2}
-            />
-          </BarChart>
-        </div>}
+                formatter={(value) =>
+                  value === 0 ? 'No attempt' : `${value} attempts`
+                }
+              />
+              <Bar
+                dataKey="attempts"
+                fill="#3B82F6"
+                name="Attempts"
+                minPointSize={2}
+              />
+            </BarChart>
+          </div>
+        )}
 
-        {!daily && 
-        <div className="mb-6 text-center">
-          <p className="text-sm italic">
-            This was a random run, it will not be saved to your history
-          </p>
-        </div>}
-          
+        {!daily && (
+          <div className="mb-6 text-center">
+            <p className="text-sm italic">
+              This was a random run, it will not be saved to your history
+            </p>
+          </div>
+        )}
+
         <div className="mb-4 text-center space-y-4">
-          {daily && <button
-            onClick={handleShare}
-            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-              copied 
-                ? 'bg-green-500 hover:bg-green-600' 
-                : 'bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano'
-            } text-white mr-2`}
-          >
-            <div className="flex text-center gap-2">
-              {copied ? <Clipboard size={20} className="mt-0.5" /> : <Send size={20} className="mt-0.5" />}
-              {copied ? 'Copied to Clipboard!' : 'Share'}
-            </div>
-          </button>}
+          {daily && (
+            <button
+              onClick={handleShare}
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                copied
+                  ? 'bg-green-500 hover:bg-green-600'
+                  : 'bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano'
+              } text-white mr-2`}
+            >
+              <div className="flex text-center gap-2">
+                {copied ? (
+                  <Clipboard size={20} className="mt-0.5" />
+                ) : (
+                  <Send size={20} className="mt-0.5" />
+                )}
+                {copied ? 'Copied to Clipboard!' : 'Share'}
+              </div>
+            </button>
+          )}
 
-          {!daily && <button
-            onClick={() => window.location.reload()}
-            className={`px-4 py-2 rounded-lg transition-colors duration-200 bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano text-white mr-2`}
-          >
-            <div className="flex text-center gap-2">
-              <Undo2 size={20} className="mt-0.5" />
-              Back to Daily
-            </div>
-          </button>}
+          {!daily && (
+            <button
+              onClick={() => window.location.reload()}
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano text-white mr-2`}
+            >
+              <div className="flex text-center gap-2">
+                <Undo2 size={20} className="mt-0.5" />
+                Back to Daily
+              </div>
+            </button>
+          )}
 
           <button
-            onClick={() => {onClose();doRandomRun()}}
+            onClick={() => {
+              onClose()
+              doRandomRun()
+            }}
             className={`px-4 py-2 rounded-lg transition-colors duration-200 bg-panolighter dark:bg-panodarker hover:bg-pano dark:hover:bg-pano text-white`}
           >
             <div className="flex text-center gap-2">
