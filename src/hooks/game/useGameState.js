@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getDateInMST } from '../../utils/date/dateHelpers'
+import { getTodayString } from '../../utils/date/dateHelpers'
 import { getComparison } from '../../utils/game/gameLogic'
 import { useSupabase } from '../../contexts/SupabaseContext'
 import {
@@ -47,7 +47,7 @@ export const useGameState = (setShowWinModal, setShowLossModal, daily) => {
   ])
 
   const fetchDailyRun = async () => {
-    const date = getDateInMST().toISOString().split('T')[0]
+    const date = getTodayString()
 
     try {
       const { data, error } = await supabase

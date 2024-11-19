@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Clipboard, Send, Dices, Undo2 } from 'lucide-react'
 import { BarChart, Bar, YAxis, Tooltip, XAxis } from 'recharts'
 import { useCookies } from 'react-cookie'
-import { getDateInMST } from '../../../utils/date/dateHelpers'
+import { getTodayString } from '../../../utils/date/dateHelpers'
 import BaseModal from './BaseModal'
 import ModalButton from './ModalButton'
 import GameEndContent from './GameEndContent'
@@ -21,7 +21,7 @@ const WinModal = ({
 
   const getLast7DaysData = () => {
     const data = []
-    const today = getDateInMST()
+    const today = getTodayString()
     const cookieData = cookies.panodle_attempts || {}
 
     for (let i = 6; i >= 0; i--) {
@@ -30,7 +30,7 @@ const WinModal = ({
       const dateStr = date.toISOString().split('T')[0]
 
       const attemptsValue =
-        date.toISOString().split('T')[0] === today.toISOString().split('T')[0]
+        date.toISOString().split('T')[0] === today
           ? attempts || cookieData[dateStr] || 0
           : cookieData[dateStr] || 0
 
